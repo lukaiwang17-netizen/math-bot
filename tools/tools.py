@@ -1,10 +1,14 @@
-import random
+from core.state import STATE
 
-def random_numbers(count: int, min_val: int, max_val: int):
-    return [random.randint(min_val, max_val) for _ in range(count)]
+def cart_add(item: str, cost: int):
+    STATE["cart"].append({
+        "name": item,
+        "price": cost
+    })
+    return f"Added {item} for ${cost}"
 
-def find_max(numbers: list):
-    return max(numbers)
+def cart_total():
+    return sum(entry["price"] for entry in STATE["cart"])
 
-def reverse_string(s: str):
-    return s[::-1]
+def cart_list():
+    return STATE["cart"]

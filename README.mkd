@@ -1,0 +1,273 @@
+# Tool-Using AI Agent Guide
+
+This project is a minimal tool-using AI agent framework. It allows you to define tools, describe them to the model, and run an interactive agent loop where the model can call Python functions.
+
+Most of the system is already implemented. Students are expected to extend only specific parts of the codebase.
+
+---
+
+## Core Concept
+
+The agent operates in a loop:
+
+- The model receives a system prompt and a user message
+- It either requests a tool call or produces a final answer
+- If a tool is called, Python executes it and returns the result
+- The result is passed back into the model
+- The model then produces a final response
+
+---
+
+## STATE (Student-Managed Memory / System State)
+
+In addition to tools, the system provides a shared `STATE` object.
+
+This is a **global Python dictionary managed entirely by your tools**, not the model.
+
+### What STATE is for
+
+STATE is used to store persistent or evolving data across tool calls, such as:
+
+- shopping carts
+- counters
+- user preferences
+- session data
+- temporary working memory
+- intermediate results between tool calls
+
+---
+
+### Key Idea
+
+- The AI does NOT directly see or manage STATE
+- Only your tools read and modify STATE
+- STATE persists across the full agent session
+- It behaves like a simple in-memory database
+
+---
+
+### Example STATE Structure
+
+```
+STATE = {
+    "cart": [],
+    "counter": 0,
+    "history": []
+}
+```
+
+You do not need to manually define all keys in advance. Your tools should safely initialize missing values.
+
+---
+
+### Example: Adding to a Cart
+
+```
+def cart_add(item: str, cost: int):
+    if "cart" not in STATE:
+        STATE["cart"] = []
+
+    STATE["cart"].append({
+        "item": item,
+        "cost": cost
+    })
+
+    return f"Added {item} for ${cost}"
+```
+
+---
+
+### Example: Getting Cart Total
+
+```
+def cart_total():
+    if "cart" not in STATE:
+        return 0
+
+    return sum(item["cost"] for item in STATE["cart"])
+```
+
+---
+
+### Example: Listing Cart Items
+
+```
+def cart_list():
+    if "cart" not in STATE:
+        return []
+
+    return STATE["cart"]
+```
+
+---
+
+### Important Rules
+
+- STATE must only be modified inside tools
+- The model never directly accesses STATE
+- STATE should stay simple (dict, list, primitives)
+- Avoid storing complex objects or external resources
+
+---
+
+## Files You Are Expected to Edit
+
+### tools/tools.py — Define Tools
+
+This is where you implement the actual Python functions that the model can call.
+
+You should:
+- Add new tool functions here
+- Use STATE when you need persistence across tool calls
+- Keep tools simple and deterministic
+- Use standard Python types (int, list, str, etc.)
+- Avoid unnecessary side effects outside STATE
+
+---
+
+### tools/registry.py — Register Tools and Describe Them
+
+This file connects tool names to functions and defines how the model should use them.
+
+You should:
+- Register each tool in the `TOOLS` dictionary
+- Provide a clear description for each tool in `TOOL_DESCRIPTIONS`
+
+The descriptions are critical because the model relies on them to correctly format arguments.
+
+---
+
+### prompts/system_prompt.py — System Prompt (Optional)
+
+This file defines how the model behaves.
+
+You may:
+- Adjust how strictly the model follows JSON formatting rules
+- Improve clarity of tool usage instructions
+- Modify tone or behavior
+
+This file is optional to change but strongly affects performance.
+
+---
+
+### runall.py — Run and Test the Agent
+
+This is the main entry point for running the system.
+
+You should use this file to:
+- Start chat sessions
+- Test tool behavior
+- Debug model responses and tool calls
+
+---
+
+### config.py — Model Configuration
+
+This file controls which model is being used and how it behaves.
+
+You can:
+- Switch between different models
+- Adjust model parameters such as temperature
+- Experiment with different configurations
+
+---
+
+## Files You Should NOT Modify
+
+The following files are part of the core system and should not be changed unless you fully understand the architecture:
+
+- agent logic and execution loop
+- LLM API wrapper
+- logging system
+- schema validation
+- internal tool execution wiring
+
+Modifying these files can break:
+- tool calling behavior
+- conversation flow
+- logging accuracy
+- JSON parsing and validation
+
+---
+
+## Expected Workflow
+
+A typical workflow is:
+
+- Define a tool in tools/tools.py
+- Register and describe it in tools/registry.py
+- Use STATE inside tools if persistence is needed
+- Run the system using runall.py
+- Interact with the agent and test tool usage
+- Observe logs and debug behavior
+
+---
+
+## Tool Output Format
+
+The model must always output valid structured JSON.
+
+It must either:
+- request a tool call, or
+- return a final response
+
+No additional text outside the JSON format is allowed.
+
+---
+
+## Example Interaction (Conceptual)
+
+```
+User: add a cookie for $5 and a muffin for $2
+
+Assistant:
+{
+  "action": "tool",
+  "tool_name": "cart_add",
+  "tool_args": {
+    "item": "cookie",
+    "cost": 5
+  }
+}
+
+Tool Result:
+Added cookie for $5
+
+Assistant:
+{
+  "action": "tool",
+  "tool_name": "cart_add",
+  "tool_args": {
+    "item": "muffin",
+    "cost": 2
+  }
+}
+
+Tool Result:
+Added muffin for $2
+
+Final Response:
+{
+  "action": "final",
+  "response": "Your cart contains a cookie ($5) and a muffin ($2)."
+}
+```
+
+---
+
+## Purpose of the Project
+
+This project is designed to help you understand:
+
+- How LLM tool calling works
+- Structured outputs and JSON constraints
+- Agent reasoning loops
+- Function execution pipelines
+- Prompt design and control of model behavior
+- Persistent state management in tool-based systems
+
+---
+
+## Final Notes
+
+This system is intentionally minimal. You are expected to experiment, extend functionality, and debug issues as part of the learning process.

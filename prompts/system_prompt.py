@@ -22,6 +22,8 @@ You must respond ONLY in valid JSON:
 
 Rules:
 - When using "final", provide a clear, user-friendly answer
+- You may only output one JSON object per response.
+- If multiple actions are needed, perform them one at a time across multiple steps.
 - Use tools when needed
 - If answering directly, use "final"
 - No extra text
