@@ -1,13 +1,26 @@
 from tools.tools import *
 
 TOOLS = {
-    "cart_add": cart_add,
-    "cart_total": cart_total,
-    "cart_list": cart_list,
+    "addition": addition,
+    "subtraction": subtraction,
+    "find_max": find_max,
+    "generate_random_numbers": generate_random_numbers,
+    "division": division,
+    "multiplication": multiplication,
+    "area_square": area_square,
+    "area_circle": area_circle,
+    "area_cube": area_cube,
+
+    
 }
 
 TOOL_DESCRIPTIONS = {
-    "cart_add": "Add an item to the cart. args: item:str, cost:int",
-    "cart_total": "Return total cost of all items in cart. args: none",
-    "cart_list": "Return all items currently in cart. args: none",
+    "subtraction": " subtracts two or more numbers. args: nums:int[]",
+    "find_max": "Finds the largest number. args: nums:int[]",
+    "generate_random_numbers": "Generates random numbers. args: count: int, min_val: int, max_val: int",
+    "division": "Divides two or more numbers. arg: nums:int[]",
+    "multiplication":"multiplies two or more numbers. arg: nums:int[]",
+    "area_sqaure": "multiplies length by length. arg: length:int[]",
+    "area_circle": "finds the area of a circle arg: radius:int[]",
+    "area_cube": "multiplies length by length by length. arg: length:int[]"
 }

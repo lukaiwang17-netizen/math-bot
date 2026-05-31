@@ -1,14 +1,49 @@
 from core.state import STATE
+import random
 
-def cart_add(item: str, cost: int):
-    STATE["cart"].append({
-        "name": item,
-        "price": cost
-    })
-    return f"Added {item} for ${cost}"
+def addition(nums):
+    total=0
+    for x in nums:
+        total=total+x
+    return total
 
-def cart_total():
-    return sum(entry["price"] for entry in STATE["cart"])
+def subtraction(nums):
+    total=0
+    for x in nums:
+        total=total-x
+    return total
 
-def cart_list():
-    return STATE["cart"]
+def find_max(numbers):
+    return max(numbers)
+
+def generate_random_numbers(count: int, min_val: int, max_val: int):
+    return [random.randint(min_val, max_val) for _ in range(count)]
+
+def average(nums):
+   total=0
+   for x in nums:
+    total=x+total
+    average=total/len(nums)
+    return average
+
+def division(nums):
+    total=0
+    for x in nums:
+        total=total/x
+    return total
+
+def multiplication(nums):
+    total=0
+    for x in nums:
+        total=total*total
+    return total
+
+def area_square(length):
+    return length*length
+
+def area_circle(radius):
+    area = 3.14 * radius * radius
+    return area
+
+def area_cube(length):
+    return length*length*length
