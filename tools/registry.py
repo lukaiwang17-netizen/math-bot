@@ -10,6 +10,7 @@ TOOLS = {
     "area_square": area_square,
     "area_circle": area_circle,
     "area_cube": area_cube,
+    "average": average,
 
     
 }
@@ -22,5 +23,6 @@ TOOL_DESCRIPTIONS = {
     "multiplication":"multiplies two or more numbers. arg: nums:int[]",
     "area_square": "multiplies length by length. arg: length:int",
     "area_circle": "finds the area of a circle arg: radius:int",
-    "area_cube": "multiplies length by length by length. arg: length:int"
+    "area_cube": "multiplies length by length by length. arg: length:int",
+    "average": "Gets the average of two or more numbers. arg: nums:int[]" 
 }

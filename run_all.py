@@ -44,7 +44,7 @@ def start_ollama():
         try:
             requests.get("http://localhost:11434")
             print("Ollama is running.")
-            return
+            return 
         except:
             time.sleep(0.5)
 
