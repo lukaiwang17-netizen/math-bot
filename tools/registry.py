@@ -20,7 +20,7 @@ TOOL_DESCRIPTIONS = {
     "generate_random_numbers": "Generates random numbers. args: count: int, min_val: int, max_val: int",
     "division": "Divides two or more numbers. arg: nums:int[]",
     "multiplication":"multiplies two or more numbers. arg: nums:int[]",
-    "area_sqaure": "multiplies length by length. arg: length:int[]",
-    "area_circle": "finds the area of a circle arg: radius:int[]",
-    "area_cube": "multiplies length by length by length. arg: length:int[]"
+    "area_square": "multiplies length by length. arg: length:int",
+    "area_circle": "finds the area of a circle arg: radius:int",
+    "area_cube": "multiplies length by length by length. arg: length:int"
 }

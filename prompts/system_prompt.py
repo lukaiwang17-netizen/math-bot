@@ -1,5 +1,5 @@
 from tools.registry import TOOL_DESCRIPTIONS
-
+from core.state import STATE
 def build_system_prompt():
     tool_list = "\n".join(
         [f"{name}: {desc}" for name, desc in TOOL_DESCRIPTIONS.items()]
@@ -10,6 +10,9 @@ You are a tool-using AI agent.
 
 Available tools:
 {tool_list}
+
+
+The last calculated answer was: {STATE["last_answer"]}
 
 You must respond ONLY in valid JSON:
 
