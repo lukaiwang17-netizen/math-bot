@@ -17,7 +17,7 @@ TOOLS = {
 
 TOOL_DESCRIPTIONS = {
     "subtraction": " subtracts two or more numbers. args: nums:int[]",
-    "addition":" Adds two ir more numbers. args: nums:int[]",
+    "addition":" Adds two or more numbers. args: nums:int[]",
     "find_max": "Finds the largest number. args: nums:int[]",
     "generate_random_numbers": "Generates random numbers. args: count: int, min_val: int, max_val: int",
     "division": "Divides two or more numbers. arg: nums:int[]",
